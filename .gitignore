@@ -1,4 +1,9 @@
+*.csproj
 *.pidb
+*.unityproj
+*.DS_Store
+*.sln
+*.userprefs
 *.apk
 Temp
 Library
