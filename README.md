@@ -1,4 +1,4 @@
 fpvflyer
 ========
 
-Test project for Unit/Android/OpenDive
+Test project for Unity/Android/OpenDive
