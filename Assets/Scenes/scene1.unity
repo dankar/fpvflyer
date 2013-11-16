@@ -142,6 +142,7 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 11400006, guid: 839dfa13d3069624da833c7a7e4e28de, type: 2}
     - {fileID: 3300000, guid: 839dfa13d3069624da833c7a7e4e28de, type: 2}
+    - {fileID: 11400008, guid: 839dfa13d3069624da833c7a7e4e28de, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 839dfa13d3069624da833c7a7e4e28de, type: 2}
   m_RootGameObject: {fileID: 1799726006}
   m_IsPrefabParent: 0
@@ -563,8 +564,8 @@ GameObject:
   - 4: {fileID: 1799726010}
   - 65: {fileID: 1799726008}
   - 143: {fileID: 1799726012}
-  - 114: {fileID: 1799726011}
   - 54: {fileID: 1799726013}
+  - 114: {fileID: 1799726007}
   m_Layer: 0
   m_Name: FPV_QuadCopter
   m_TagString: Untagged
@@ -572,6 +573,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1799726007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1799726006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3792773e582efb43981532495d37d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPivot: {fileID: 0}
+  forwardSpeed: 4
+  backwardSpeed: 1
+  sidestepSpeed: 1
+  jumpSpeed: 8
 --- !u!65 &1799726008
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -597,23 +614,6 @@ Transform:
   m_Children:
   - {fileID: 608129189}
   m_Father: {fileID: 0}
---- !u!114 &1799726011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400008, guid: 839dfa13d3069624da833c7a7e4e28de,
-    type: 2}
-  m_PrefabInternal: {fileID: 308277304}
-  m_GameObject: {fileID: 1799726006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47aed9e1d6f575340ac985e231eb96f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraPivot: {fileID: 0}
-  forwardSpeed: 4
-  backwardSpeed: 1
-  sidestepSpeed: 1
-  jumpSpeed: 8
 --- !u!143 &1799726012
 CharacterController:
   m_ObjectHideFlags: 0
