@@ -9,14 +9,9 @@ var sidestepSpeed : float = 1f;
 var jumpSpeed : float = 8f;
 
 private var thisTransform : Transform;
-private var scoreKeeper : ScoreKeeper;
 
 function Start () {
 	thisTransform = this.transform;
-	
-	scoreKeeper = GameObject.Find("ScoreKeeperObject").GetComponent(ScoreKeeper);
-	
-	scoreKeeper.LevelStart = Time.realtimeSinceStartup;
 }
 
 function OnCollisionEnter(collision : Collision) {
