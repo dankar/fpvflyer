@@ -1,5 +1,4 @@
 ﻿#pragma strict
-@script RequireComponent(CharacterController)
 @script RequireComponent(Rigidbody)
 
 var cameraPivot : Transform;
@@ -10,11 +9,9 @@ var sidestepSpeed : float = 1f;
 var jumpSpeed : float = 8f;
 
 private var thisTransform : Transform;
-private var character : CharacterController;
 
 function Start () {
-	thisTransform = GetComponent(Transform);
-	character = GetComponent(CharacterController);
+	thisTransform = this.transform;
 }
 
 function OnCollisionEnter(collision : Collision) {
@@ -95,16 +92,16 @@ function Update () {
 	
 	var collectiveForce : Vector3;
 	
-	collectiveForce = character.transform.TransformDirection(Vector3(0, collective * 12f, 0));
+	collectiveForce = this.transform.TransformDirection(Vector3(0, collective * 12f, 0));
 	
-	var torqueVector = character.transform.TransformDirection(Vector3(pitch / 6f, yaw / 6f, roll / 6f));
+	var torqueVector = this.transform.TransformDirection(Vector3(pitch / 6f, yaw / 6f, roll / 6f));
 	var forceVector = collectiveForce;
 	var rayVector : Vector3;
-	rayVector = character.rigidbody.transform.up * -1;
+	rayVector = this.rigidbody.transform.up * -1;
 	
 	// Cast ray downward. If it hits ground calculate ground effect depending on height (higher when you are lower)
 	// and angle of incidence
-	if(Physics.Raycast(character.rigidbody.position, rayVector, hitInfo))
+	if(Physics.Raycast(this.rigidbody.position, rayVector, hitInfo))
 	{
 		if(hitInfo.distance < 6)
 		{
@@ -120,20 +117,20 @@ function Update () {
 	var aoa : float;
 	var effect : float;
 	
-	velocity = character.rigidbody.velocity;
+	velocity = this.rigidbody.velocity;
 	// Calculate AoA. The AoA changes depending on the collective.
-	aoa = -Vector3.Dot(character.rigidbody.transform.up, (velocity - collectiveForce).normalized); // AoA, 0 is in line with airfoil. Positive is positive AoA and vice versa
+	aoa = -Vector3.Dot(this.rigidbody.transform.up, (velocity - collectiveForce).normalized); // AoA, 0 is in line with airfoil. Positive is positive AoA and vice versa
 	//effect = 1 - Mathf.Abs(aoa); // Magnitude of effect (should be a curve)
 	
-	forceVector += character.rigidbody.transform.up * angleToLiftCo(aoa) * velocity.magnitude / 5f; // Add ground effect
+	forceVector += this.rigidbody.transform.up * angleToLiftCo(aoa) * velocity.magnitude / 5f; // Add ground effect
 	
 	// Calculate AoA again for drag. This time the effect from the collective is inverted.
-	aoa = -Vector3.Dot(character.rigidbody.transform.up, (velocity + collectiveForce).normalized); // AoA, 0 is in line with airfoil. Positive is positive AoA and vice versa
+	aoa = -Vector3.Dot(this.rigidbody.transform.up, (velocity + collectiveForce).normalized); // AoA, 0 is in line with airfoil. Positive is positive AoA and vice versa
 	
 	forceVector += -velocity * angleToDragCo(aoa) / 5f; // Add drag dependent on angle of attack
 	
 	
-	character.rigidbody.AddForce(forceVector);
-	character.rigidbody.AddTorque(torqueVector);
-	character.rigidbody.AddTorque(character.rigidbody.angularVelocity * -0.1);
+	this.rigidbody.AddForce(forceVector);
+	this.rigidbody.AddTorque(torqueVector);
+	this.rigidbody.AddTorque(this.rigidbody.angularVelocity * -0.1);
 }
