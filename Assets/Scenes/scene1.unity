@@ -930,7 +930,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1799726010}
   - 65: {fileID: 1799726008}
-  - 143: {fileID: 1799726012}
   - 54: {fileID: 1799726013}
   - 114: {fileID: 1799726007}
   - 114: {fileID: 1799726009}
@@ -995,21 +994,6 @@ Transform:
   m_Children:
   - {fileID: 608129189}
   m_Father: {fileID: 0}
---- !u!143 &1799726012
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 14300000, guid: 839dfa13d3069624da833c7a7e4e28de,
-    type: 2}
-  m_PrefabInternal: {fileID: 1884015066}
-  m_GameObject: {fileID: 1799726006}
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: .5
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1799726013
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1061,7 +1045,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 14300000, guid: 839dfa13d3069624da833c7a7e4e28de, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 839dfa13d3069624da833c7a7e4e28de, type: 2}
   m_RootGameObject: {fileID: 1799726006}
   m_IsPrefabParent: 0
