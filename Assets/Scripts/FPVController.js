@@ -28,14 +28,6 @@ function OnCollisionEnter(collision : Collision) {
 	Debug.Log(collision.collider.name);*/
 }
 
-function OnTriggerEnter(collider : Collider) {
-	if(collider.name == "FinishTrigger")
-	{
-		scoreKeeper.LevelEnd = Time.realtimeSinceStartup;
-		Application.LoadLevel("ScoreScreen");
-	}
-}
-
 function angleToCo(aoa : float, array : Array)
 {
 	var aoaMag = Mathf.Abs(aoa) * 45f;
