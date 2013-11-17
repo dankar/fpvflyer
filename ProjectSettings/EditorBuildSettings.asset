@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/ScoreScreen.unity
   - enabled: 1
     path: Assets/Scenes/scene2.unity
+  - enabled: 1
+    path: Assets/Scenes/scene3.unity
