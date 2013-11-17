@@ -7,15 +7,17 @@ var scenes = 	[
 					['scene2','Andra banan']
 				];
 				
+private var playerInput : PlayerInput;
 
 private var stateMain : int = 1;				
 private var stateOptions : int = 2;
 private var stateCalibration : int = 3;
+private var stateInputs : int = 4;
 private var state : int = stateMain;
 
 private var center_x : int = Screen.width/2/2;
 private var center_x_2 : int = Screen.width/2/2*3;
-private var center_y : int = Screen.height/2;
+private var center_y : int = Screen.height/2/2/2;
 
 // Gui arrow position [row]
 private var gui_arrow_pos : int = 0;
@@ -51,11 +53,16 @@ function initMainMenu() {
 		});
 	}
 	
-	// Callback n-1, Change to options menu
+	// Callback n-2, Change to options menu
 	gui_callbacks.Add(function() {
 		changeState(stateOptions);
 	});
 	
+	// Callback n-1, Exit
+	gui_callbacks.Add(function() {
+		Application.Quit();
+	});
+
 }
 
 function drawMainMenu()
@@ -74,6 +81,10 @@ function drawMainMenu()
 		}
 		
 		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*i,180,30), "Options")) {
+			gui_callbacks[gui_callbacks.Count-2]();
+		}
+		
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*(i+1),180,30), "Exit")) {
 			gui_callbacks[gui_callbacks.Count-1]();
 		}
 		
@@ -117,6 +128,86 @@ function drawCalibrationMenu()
 	
 }
 
+function initInputsMenu()
+{
+	// Callback 0-3, Map dpad
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	
+	// Callbacks 4-7, Map buttons
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	
+	// Callback 8, Save & return
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+	
+	// Callback 9, Discard and return
+	gui_callbacks.Add(function() {
+			changeState(stateOptions);
+	});
+}
+
+function drawInputsMenu()
+{
+
+	// Both left and right screen
+	for(cur_center_x in [center_x,center_x_2]) {
+	
+		// Buttons
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*0,180,30), "D-pad Up");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*1,180,30), "D-pad Down");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*2,180,30), "D-pad Left");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*3,180,30), "D-pad Right");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*4,180,30), "Gamepad X");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*5,180,30), "Gamepad Y");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*6,180,30), "Gamepad A");
+		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*7,180,30), "Gamepad B");
+		
+		// ... and corresponding labels
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*0,70,30), playerInput.getMappedKey("dpad_up"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*1,70,30), playerInput.getMappedKey("dpad_down"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*2,70,30), playerInput.getMappedKey("dpad_left"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*3,70,30), playerInput.getMappedKey("dpad_right"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*4,70,30), playerInput.getMappedKey("x"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*5,70,30), playerInput.getMappedKey("y"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*6,70,30), playerInput.getMappedKey("a"));
+		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*7,70,30), playerInput.getMappedKey("b"));
+		
+		// Navigation buttons
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*8,180,30), "Save")) {
+			gui_callbacks[8]();
+		}
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*9,180,30), "Cancel")) {
+			gui_callbacks[9]();
+		}	
+	}
+
+	drawGuiArrow();
+	
+}
+
 function initOptionsMenu() {
 
 	// Callback 0, Change to calibration menu
@@ -124,7 +215,12 @@ function initOptionsMenu() {
 			changeState( stateCalibration );
 	});
 	
-	// Callback 1, Change to main menu
+	// Callback 1, Change to inputs menu
+	gui_callbacks.Add(function() {
+			changeState( stateInputs );
+	});
+	
+	// Callback 2, Change to main menu
 	gui_callbacks.Add(function() {
 			changeState( stateMain );
 	});
@@ -138,8 +234,12 @@ function drawOptionsMenu()
 			gui_callbacks[0]();
 		}
 		
-		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*1,180,30), "Back")) {
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*1,180,30), "Inputs")) {
 			gui_callbacks[1]();
+		}
+		
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*2,180,30), "Back")) {
+			gui_callbacks[2]();
 		}
 	}
 	
@@ -170,6 +270,8 @@ function changeState(newState) {
 
 function OnGUI () {
 
+	playerInput = GetComponent(PlayerInput);
+	 
 	switch(state)
 	{
 		case stateMain:
@@ -183,6 +285,10 @@ function OnGUI () {
 		case stateCalibration:
 			if( gui_callbacks.Count == 0 ) initCalibrationMenu();
 			drawCalibrationMenu();
+			break;
+		case stateInputs:
+			if( gui_callbacks.Count == 0 ) initInputsMenu();
+			drawInputsMenu();
 			break;
 	}
 }

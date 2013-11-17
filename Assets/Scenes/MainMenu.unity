@@ -85,7 +85,6 @@ GameObject:
   - 20: {fileID: 355718766}
   - 124: {fileID: 355718765}
   - 92: {fileID: 355718764}
-  - 81: {fileID: 355718763}
   - 65: {fileID: 355718762}
   m_Layer: 0
   m_Name: Camera_right
@@ -118,14 +117,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!81 &355718763
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: 9069ff3d504c93343bc5c9a6d99a845b,
-    type: 2}
-  m_PrefabInternal: {fileID: 2000778352}
-  m_GameObject: {fileID: 355718760}
-  m_Enabled: 1
 --- !u!92 &355718764
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2408,8 +2399,8 @@ GameObject:
   - 4: {fileID: 602462784}
   - 81: {fileID: 602462783}
   - 114: {fileID: 602462782}
-  - 114: {fileID: 602462781}
   - 114: {fileID: 602462780}
+  - 114: {fileID: 602462781}
   m_Layer: 0
   m_Name: Dive_Camera
   m_TagString: MainCamera
@@ -2431,13 +2422,12 @@ MonoBehaviour:
 --- !u!114 &602462781
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400004, guid: 9069ff3d504c93343bc5c9a6d99a845b,
-    type: 2}
-  m_PrefabInternal: {fileID: 2000778352}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 602462779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 145e22e89d44f76408d656f0801e651a, type: 3}
+  m_Script: {fileID: 11500000, guid: 52d060e6dfb942d41b11de122eec411b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &602462782
@@ -2486,7 +2476,6 @@ GameObject:
   - 20: {fileID: 1444059439}
   - 124: {fileID: 1444059438}
   - 92: {fileID: 1444059437}
-  - 81: {fileID: 1444059436}
   - 65: {fileID: 1444059435}
   m_Layer: 0
   m_Name: Camera_left
@@ -2519,14 +2508,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!81 &1444059436
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100004, guid: 9069ff3d504c93343bc5c9a6d99a845b,
-    type: 2}
-  m_PrefabInternal: {fileID: 2000778352}
-  m_GameObject: {fileID: 1444059433}
-  m_Enabled: 1
 --- !u!92 &1444059437
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2632,7 +2613,18 @@ Prefab:
       propertyPath: m_BackGroundColor.r
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8100004, guid: 9069ff3d504c93343bc5c9a6d99a845b, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100000, guid: 9069ff3d504c93343bc5c9a6d99a845b, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8100004, guid: 9069ff3d504c93343bc5c9a6d99a845b, type: 2}
+    - {fileID: 8100000, guid: 9069ff3d504c93343bc5c9a6d99a845b, type: 2}
+    - {fileID: 11400004, guid: 9069ff3d504c93343bc5c9a6d99a845b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9069ff3d504c93343bc5c9a6d99a845b, type: 2}
   m_RootGameObject: {fileID: 602462779}
   m_IsPrefabParent: 0
