@@ -3,8 +3,9 @@
 import System.Collections.Generic;
 
 var scenes = 	[	
-					['scene1','Första banan'],
-					['scene2','Andra banan']
+					['scene1','First steps'],
+					['scene2','Canyon'],
+					['scene3','Volcano']
 				];
 				
 private var playerInput : PlayerInput;
