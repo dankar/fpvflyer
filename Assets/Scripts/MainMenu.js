@@ -24,22 +24,21 @@ private var gui_arrow_pos : int = 0;
 private var gui_callbacks : List.<Function> = new List.<Function>();
 
 function Start () {
-
+	playerInput = GetComponent(PlayerInput);
 }
 
 function Update () {
 
 	// Enable movement up/down by using joystick/Gamepad
-	if( gui_arrow_pos < gui_callbacks.Count-1 && Input.GetKeyDown("down") ) {
+	if( gui_arrow_pos < gui_callbacks.Count-1 && Input.GetKeyDown(playerInput.getMappedKeyCode("dpad_down")) ) {
 		gui_arrow_pos++;
-	} else if (gui_arrow_pos > 0 && Input.GetKeyDown("up") ) {
+	} else if (gui_arrow_pos > 0 && Input.GetKeyDown(playerInput.getMappedKeyCode("dpad_up")) ) {
 		gui_arrow_pos--;
 	}
 	
 	// X or Start (gamepad) or Enter (keyboard launches the selected menu item
-	if ( Input.GetKeyDown("joystick button 1") || Input.GetKeyDown("joystick button 9")  || Input.GetKeyDown("return") ) {
+	if ( Input.GetKeyDown(playerInput.getMappedKeyCode("start")) ) {
 		gui_callbacks[gui_arrow_pos](gui_arrow_pos);
-		Debug.Log("Ok");
 	}
 	
 }
@@ -130,42 +129,23 @@ function drawCalibrationMenu()
 
 function initInputsMenu()
 {
-	// Callback 0-3, Map dpad
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	
-	// Callbacks 4-7, Map buttons
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
-	gui_callbacks.Add(function() {
-			changeState(stateOptions);
-	});
+	// Callback for every key
+	for(btn in playerInput.button_config) {
+		gui_callbacks.Add(function() {
+				playerInput.waitForKey(btn[1]);
+		});
+	}
 	
 	// Callback 8, Save & return
 	gui_callbacks.Add(function() {
-			changeState(stateOptions);
+		playerInput.saveStaged();
+		changeState(stateOptions);
 	});
 	
 	// Callback 9, Discard and return
 	gui_callbacks.Add(function() {
-			changeState(stateOptions);
+		playerInput.discardStaged();
+		changeState(stateOptions);
 	});
 }
 
@@ -174,33 +154,25 @@ function drawInputsMenu()
 
 	// Both left and right screen
 	for(cur_center_x in [center_x,center_x_2]) {
-	
-		// Buttons
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*0,180,30), "D-pad Up");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*1,180,30), "D-pad Down");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*2,180,30), "D-pad Left");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*3,180,30), "D-pad Right");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*4,180,30), "Gamepad X");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*5,180,30), "Gamepad Y");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*6,180,30), "Gamepad A");
-		GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*7,180,30), "Gamepad B");
+
+		var idx : int = 0;		
+		for(btn in playerInput.button_config) {
+			if(GUI.Button(Rect (cur_center_x-90+20,center_y-15+50+35*idx,180,30), btn[0]))  {
+				gui_callbacks[idx]();
+			}
 		
-		// ... and corresponding labels
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*0,70,30), playerInput.getMappedKey("dpad_up"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*1,70,30), playerInput.getMappedKey("dpad_down"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*2,70,30), playerInput.getMappedKey("dpad_left"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*3,70,30), playerInput.getMappedKey("dpad_right"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*4,70,30), playerInput.getMappedKey("x"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*5,70,30), playerInput.getMappedKey("y"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*6,70,30), playerInput.getMappedKey("a"));
-		GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*7,70,30), playerInput.getMappedKey("b"));
+			// ... and corresponding labels
+			GUI.Label(Rect (cur_center_x-90+20+200,center_y-15+50+35*idx,70,30), playerInput.getStagedKey(btn[1]));
+			
+			idx++;
+		}
 		
 		// Navigation buttons
-		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*8,180,30), "Save")) {
-			gui_callbacks[8]();
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*(idx),180,30), "Save")) {
+			gui_callbacks[idx]();
 		}
-		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*9,180,30), "Cancel")) {
-			gui_callbacks[9]();
+		if (GUI.Button (Rect (cur_center_x-90+20,center_y-15+50+35*(idx+1),180,30), "Cancel")) {
+			gui_callbacks[idx+1]();
 		}	
 	}
 
@@ -269,8 +241,6 @@ function changeState(newState) {
 }
 
 function OnGUI () {
-
-	playerInput = GetComponent(PlayerInput);
 	 
 	switch(state)
 	{
